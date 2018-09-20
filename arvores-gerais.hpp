@@ -180,6 +180,7 @@ namespace Data_structures {
 			bool root() const;
 
 			void insert( Type const &obj );
+			void search (Type const &obj, iterator itr);
 
 			iterator &operator++();
 			iterator operator++( int );
@@ -812,6 +813,64 @@ namespace Data_structures {
 		}
 	}
 
+	template <typename Type>
+	void General_tree<Type>::iterator::search( Type const &obj, iterator itr) {
+
+		int aux = 0;
+		if (*itr == obj){
+			aux = 1;
+		}
+
+		if (aux == 1){
+			cout << "Esta presente na lista" << endl;
+			std::cout << *itr <<
+			"  (depth " << itr.depth() <<
+			", size " << itr.size() <<
+			", height " << itr.height() <<
+			", degree " << itr.degree() <<
+			", is root " << itr.root() <<
+			", is leaf " << itr.leaf() <<
+			")" << std::endl;
+			return;
+		}
+	
+		else {
+			for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
+				search(obj, child);
+			}	
+		}
+	}
+
+	template <typename Type>
+	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
+
+		if (*itr == obj){
+			itr->next_sibling->previous_sibling = itr->previous_sibling;
+			itr->previous_sibling->next_sibling = itr->next_sibling;
+
+			if (itr->parent->children_tail == itr){
+				itr->parent->children_tail = itr->previous_sibling;
+			}
+
+			if (itr->parent->children_head == itr){
+				itr->parent->children_head = itr->next_sibling;
+			}
+
+			for ( tree_node *regress = current_node->parent; regress != 0; regress = regress->parent ) {
+				regress->node_size = regress->node_size - 1;
+			}
+			
+			itr->clear();
+			return;
+		}
+	
+		else {
+			for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
+				remove(obj, child);
+			}	
+		}
+
+	}
 	/****************************************************
 	 * ************************************************ *
 	 * *  Depth-first Traversal Iterator Definitions  * *

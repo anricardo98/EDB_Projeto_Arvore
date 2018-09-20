@@ -14,7 +14,7 @@ using namespace std;
  * user-defined depth-first traversal of the nodes.
  ******************************************************/
 
-#include "General_tree.h"
+#include "arvores-gerais.hpp"
 using namespace Data_structures;
 
 // A pre-order printer
@@ -80,14 +80,17 @@ int main() {
 		}
 	}
 
+	itr = tree.begin();
 	cout << "Size: " << tree.size() << endl;
 	cout << "Height: " << tree.height() << endl;
 	print( tree.begin(), 0 );
 	cout << endl;
-	sum( tree.begin(), 0 );
-	cout << endl;
+	itr.search(11, itr);
+	itr.search(2, itr);
+	//sum( tree.begin(), 0 );
+	//cout << endl;
 
-	for (
+	/*for (
 		General_tree<int>::breadth_iterator i = tree.begin_breadth();
 		i != tree.end_breadth();
 		++i
@@ -126,6 +129,6 @@ int main() {
 	}
 
 	cout << endl;
-
+*/
 	return 0;
 }

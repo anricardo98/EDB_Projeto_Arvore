@@ -9,7 +9,7 @@ using namespace std;
  * depth-first traversal.
  ******************************************************/
 
-#include "General_tree.h"
+#include "arvores-gerais.hpp"
 using namespace Data_structures;
 
 void print( General_tree<long>::iterator itr, int n ) {
