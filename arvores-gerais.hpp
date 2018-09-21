@@ -180,7 +180,8 @@ namespace Data_structures {
 			bool root() const;
 
 			void insert( Type const &obj );
-			void search (Type const &obj, iterator itr);
+			int search (Type const &obj, iterator itr);
+			int search_ ( Type const &obj, iterator itr);
 
 			iterator &operator++();
 			iterator operator++( int );
@@ -814,33 +815,52 @@ namespace Data_structures {
 	}
 
 	template <typename Type>
-	void General_tree<Type>::iterator::search( Type const &obj, iterator itr) {
+	int General_tree<Type>::iterator::search( Type const &obj, iterator itr) {
+			
+		int aux = search_(obj, itr);
 
-		int aux = 0;
-		if (*itr == obj){
-			aux = 1;
-		}
-
-		if (aux == 1){
-			cout << "Esta presente na lista" << endl;
-			std::cout << *itr <<
-			"  (depth " << itr.depth() <<
-			", size " << itr.size() <<
-			", height " << itr.height() <<
-			", degree " << itr.degree() <<
-			", is root " << itr.root() <<
-			", is leaf " << itr.leaf() <<
-			")" << std::endl;
-			return;
+		if (aux == 0){
+			cout << "Nao esta presente na lista" << endl;
 		}
 	
-		else {
-			for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
-				search(obj, child);
-			}	
-		}
+		return aux;
+
 	}
 
+	template <typename Type>
+	int General_tree<Type>::iterator::search_( Type const &obj, iterator itr) {
+
+		int aux = 0;
+		
+		for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
+			aux = search_(obj, child);
+
+			if (aux == 1){
+				child = itr.end();
+			}
+		}
+
+		if (aux == 0){
+			if (*itr == obj){
+				cout << "Esta presente na lista" << endl;
+				std::cout << *itr <<
+				"  (depth " << itr.depth() <<
+				", size " << itr.size() <<
+				", height " << itr.height() <<
+				", degree " << itr.degree() <<
+				", is root " << itr.root() <<
+				", is leaf " << itr.leaf() <<
+				")" << std::endl;
+				aux = 1;
+			} 
+
+		} 
+
+		return aux;
+
+	}
+
+/*
 	template <typename Type>
 	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
 
@@ -870,7 +890,8 @@ namespace Data_structures {
 			}	
 		}
 
-	}
+	}*/
+
 	/****************************************************
 	 * ************************************************ *
 	 * *  Depth-first Traversal Iterator Definitions  * *
