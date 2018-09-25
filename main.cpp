@@ -62,6 +62,7 @@ int main() {
 	General_tree<int> tree( 1 );
 
 	int saida;
+	int x;
 	General_tree<int>::iterator itr = tree.begin();
 
 	itr.insert( 11 );
@@ -88,11 +89,18 @@ int main() {
 	cout << endl;
 	saida = itr.search(11, itr);
 	cout << saida << endl;
-	saida = itr.search(2, itr);
-	cout << saida << endl;
+	/*saida = itr.search(2, itr);
+	cout << saida << endl;*/
+	x = itr.remove(11, itr);
+	saida = itr.search(11, itr);
+	cout << saida;
+
+	print (tree.begin(), 0);
+
+
 	//sum( tree.begin(), 0 );
 	//cout << endl;
-
+/*
 	for (
 		General_tree<int>::breadth_iterator i = tree.begin_breadth();
 		i != tree.end_breadth();
@@ -132,6 +140,6 @@ int main() {
 	}
 
 	cout << endl;
-
+*/
 	return 0;
 }

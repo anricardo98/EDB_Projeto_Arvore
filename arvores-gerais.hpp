@@ -182,6 +182,7 @@ namespace Data_structures {
 			void insert( Type const &obj );
 			int search (Type const &obj, iterator itr);
 			int search_ ( Type const &obj, iterator itr);
+			int remove( Type const &obj, iterator itr);
 
 			iterator &operator++();
 			iterator operator++( int );
@@ -860,37 +861,65 @@ namespace Data_structures {
 
 	}
 
-/*
+
 	template <typename Type>
-	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
+	int General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
 
-		if (*itr == obj){
-			itr->next_sibling->previous_sibling = itr->previous_sibling;
-			itr->previous_sibling->next_sibling = itr->next_sibling;
 
-			if (itr->parent->children_tail == itr){
-				itr->parent->children_tail = itr->previous_sibling;
+		int aux = 0;
+
+		for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
+			aux = remove(obj, child);
+
+			if (aux == 1){
+				child = itr.end();
 			}
 
-			if (itr->parent->children_head == itr){
-				itr->parent->children_head = itr->next_sibling;
-			}
+		}
 
-			for ( tree_node *regress = current_node->parent; regress != 0; regress = regress->parent ) {
+		if (aux == 0){
+
+			if (*itr == obj){
+
+				cout << "Elemento igual" << endl;
+				tree_node *temp = current_node->next_sibling;
+				tree_node *temp2 = current_node->previous_sibling;
+
+				cout << "nos auxiliares" << endl;
+
+				if (temp != NULL){
+					temp->previous_sibling = temp2;
+					cout << "Um" << endl;
+				}
+
+				if (temp2 != NULL){
+					temp2->next_sibling = temp;
+				}
+
+				cout << "Antes" << endl;
+
+				if (itr.parent_node->children_tail == itr.current_node){
+					itr.parent_node->children_tail = itr.current_node;
+					cout << "primeiro_if" << endl;
+				}
+
+				if (itr.parent_node->children_head == itr.current_node){
+					itr.parent_node->children_head = itr.current_node;
+					cout << "segundo_if" << endl;
+				}
+
+			/*for ( tree_node *regress = current_node->parent; regress != 0; regress = regress->parent) {
 				regress->node_size = regress->node_size - 1;
+			}*/
+				cout << "Chegou" << endl;
+				current_node->clear();
+				cout << "No removido" << endl;
+				return 1;
 			}
-			
-			itr->clear();
-			return;
-		}
 	
-		else {
-			for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
-				remove(obj, child);
-			}	
 		}
 
-	}*/
+	}
 
 	/****************************************************
 	 * ************************************************ *

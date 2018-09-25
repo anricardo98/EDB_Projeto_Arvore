@@ -13,4 +13,4 @@ main.o:
 	 $(CC) $(CPPFLAGS) -c main.cpp
 
 clean:
-	rm -f *.o
+	rm -f *.o arvore
