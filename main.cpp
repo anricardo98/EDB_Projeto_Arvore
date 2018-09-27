@@ -62,7 +62,6 @@ int main() {
 	General_tree<int> tree( 1 );
 
 	int saida;
-	int x;
 	General_tree<int>::iterator itr = tree.begin();
 
 	itr.insert( 11 );
@@ -91,9 +90,9 @@ int main() {
 	cout << saida << endl;
 	/*saida = itr.search(2, itr);
 	cout << saida << endl;*/
-	x = itr.remove(11, itr);
-	saida = itr.search(11, itr);
-	cout << saida;
+	itr.remove(111, itr);
+	saida = itr.search(111, itr);
+	cout << saida << endl;
 
 	print (tree.begin(), 0);
 

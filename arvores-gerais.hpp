@@ -182,7 +182,9 @@ namespace Data_structures {
 			void insert( Type const &obj );
 			int search (Type const &obj, iterator itr);
 			int search_ ( Type const &obj, iterator itr);
-			int remove( Type const &obj, iterator itr);
+			void remove( Type const &obj, iterator itr);
+			//int remove_( Type const &obj, iterator itr);
+
 
 			iterator &operator++();
 			iterator operator++( int );
@@ -791,6 +793,7 @@ namespace Data_structures {
 
 			// The size must now be 2:  the current node and its 
 			current_node->node_size = 2;
+
 		} else {
 			// If the current node is not a leaf node, then
 			// append the new tree node to the currently existing
@@ -862,61 +865,79 @@ namespace Data_structures {
 	}
 
 
+	/*template <typename Type>
+	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
+		int aux;
+		aux = remove_(obj, itr);
+	}*/
+
+
 	template <typename Type>
-	int General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
-
-
-		int aux = 0;
+	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
 
 		for (General_tree<int>::iterator child = itr.begin(); child != itr.end(); ++child) {
-			aux = remove(obj, child);
-
-			if (aux == 1){
-				child = itr.end();
-			}
+			remove(obj, child);
 
 		}
 
-		if (aux == 0){
+		if (*itr == obj){
 
-			if (*itr == obj){
+			int altura;
+			int tamanho = itr.current_node->node_size;
 
-				cout << "Elemento igual" << endl;
-				tree_node *temp = current_node->next_sibling;
-				tree_node *temp2 = current_node->previous_sibling;
 
-				cout << "nos auxiliares" << endl;
+			tree_node *temp = itr.current_node->next_sibling;
+			tree_node *temp2 = itr.current_node->previous_sibling;
+			tree_node *pai = itr.parent_node;
 
-				if (temp != NULL){
+			if (temp != NULL){
 					temp->previous_sibling = temp2;
 					cout << "Um" << endl;
-				}
-
-				if (temp2 != NULL){
-					temp2->next_sibling = temp;
-				}
-
-				cout << "Antes" << endl;
-
-				if (itr.parent_node->children_tail == itr.current_node){
-					itr.parent_node->children_tail = itr.current_node;
-					cout << "primeiro_if" << endl;
-				}
-
-				if (itr.parent_node->children_head == itr.current_node){
-					itr.parent_node->children_head = itr.current_node;
-					cout << "segundo_if" << endl;
-				}
-
-			/*for ( tree_node *regress = current_node->parent; regress != 0; regress = regress->parent) {
-				regress->node_size = regress->node_size - 1;
-			}*/
-				cout << "Chegou" << endl;
-				current_node->clear();
-				cout << "No removido" << endl;
-				return 1;
 			}
+
+			if (temp2 != NULL){
+				temp2->next_sibling = temp;
+			}
+
+			if (pai->children_tail == itr.current_node){
+				pai->children_tail = temp2;
+			}
+
+			if (pai->children_head == itr.current_node){
+				pai->children_head = temp;
+			}
+
+			pai->node_degree = itr.parent_node->node_degree - 1;
+
+			for (tree_node * regress = pai; regress != 0; regress = regress->parent){
 	
+				regress->node_size = regress->node_size - tamanho;
+			}
+
+			if (pai->node_degree == 0){
+
+				pai->node_height = 0;
+
+				for (
+					tree_node *current = pai, *regress = pai->parent;
+					regress != 0;
+					current = regress, regress = regress->parent
+				) {
+
+					altura = 0;
+
+					for (tree_node *i = regress; i != 0; i++){
+						altura = std::max( altura, i->node_height);
+
+					}
+
+					regress->node_height = altura + 1;
+				}
+			}
+
+			itr.current_node->clear();
+			cout << "No removido" << endl;
+			return;
 		}
 
 	}
