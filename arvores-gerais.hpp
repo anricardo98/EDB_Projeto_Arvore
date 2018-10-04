@@ -865,13 +865,6 @@ namespace Data_structures {
 	}
 
 
-	/*template <typename Type>
-	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
-		int aux;
-		aux = remove_(obj, itr);
-	}*/
-
-
 	template <typename Type>
 	void General_tree<Type>::iterator::remove( Type const &obj, iterator itr) {
 
@@ -918,17 +911,12 @@ namespace Data_structures {
 
 				pai->node_height = 0;
 
-				for (
-					tree_node *current = pai, *regress = pai->parent;
-					regress != 0;
-					current = regress, regress = regress->parent
-				) {
+				for (tree_node * regress = pai->parent; regress != 0; regress = regress->parent) {
 
 					altura = 0;
 
-					for (tree_node *i = regress; i != 0; i++){
-						altura = std::max( altura, i->node_height);
-
+					for (tree_node *i = regress->children_head; i != regress->children_tail; i = i->next_sibling){
+						altura = std::max(altura, i->node_height);
 					}
 
 					regress->node_height = altura + 1;
