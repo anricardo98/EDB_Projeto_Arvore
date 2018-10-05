@@ -90,8 +90,9 @@ int main() {
 	cout << saida << endl;
 	/*saida = itr.search(2, itr);
 	cout << saida << endl;*/
-	itr.remove(1111, itr);
-	saida = itr.search(1111, itr);
+	itr.remove(111, itr);
+	itr.remove(211, itr);
+	saida = itr.search(121, itr);
 	cout << saida << endl;
 
 	print (tree.begin(), 0);

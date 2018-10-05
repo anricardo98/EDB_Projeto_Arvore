@@ -910,17 +910,19 @@ namespace Data_structures {
 			if (pai->node_degree == 0){
 
 				pai->node_height = 0;
+			}
 
-				for (tree_node * regress = pai->parent; regress != 0; regress = regress->parent) {
+			for (tree_node * regress = pai->parent; regress != 0; regress = regress->parent) {
 
-					altura = 0;
+				altura = 0;
 
-					for (tree_node *i = regress->children_head; i != regress->children_tail; i = i->next_sibling){
-						altura = std::max(altura, i->node_height);
-					}
-
-					regress->node_height = altura + 1;
+				for (tree_node *i = regress->children_head; i != regress->children_tail; i = i->next_sibling){
+					altura = std::max(altura, i->node_height);
 				}
+
+				
+				regress->node_height = altura + 1;
+				
 			}
 
 			itr.current_node->clear();
